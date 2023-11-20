@@ -17,5 +17,7 @@ public class UserBO {
 	public UserEntity getUserEntityByLoginId(String loginId) {
 		return userRepository.findByLoginId(loginId);
 	}
-	public Integer addUser(String loginId, String password, String name)
+	public Integer addUser(String loginId, String password, String name) {
+		
+	}
 }

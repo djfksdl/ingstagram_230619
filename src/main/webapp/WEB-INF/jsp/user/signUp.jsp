@@ -6,7 +6,7 @@
 		<form id="signUpForm" method="post" action="/user/sign-up">
 			<span class="sign-up-subject">ID</span>
 			<%-- 인풋 옆에 중복확인 버튼을 옆에 붙이기 위해 div 만들고 d-flex --%>
-			<div class="d-flex ml-3 mt-3">
+			<div class="d-flex mt-3">
 				<input type="text" id="loginId" name="loginId" class="form-control col-6" placeholder="ID를 입력해주세요">
 				<button type="button" id="loginIdCheckBtn" class="btn btn-success">중복확인</button>
 			</div>
@@ -19,23 +19,29 @@
 			</div>
 			
 			<span class="sign-up-subject">Password</span>
-			<div class="m-3">
+			<div class="mt-3">
 				<input type="password" name="password" class="form-control col-6" placeholder="비밀번호를 입력하세요">
 			</div>
 
 			<span class="sign-up-subject">Confirm password</span>
-			<div class="m-3">
+			<div class="mt-3">
 				<input type="password" name="confirmPassword" class="form-control col-6" placeholder="비밀번호를 입력하세요">
 			</div>
 
 			<span class="sign-up-subject">Name</span>
-			<div class="m-3">
+			<div class="mt-3">
 				<input type="text" name="name" class="form-control col-6" placeholder="이름을 입력하세요">
 			</div>
 
 			<span class="sign-up-subject">이메일</span>
-			<div class="m-3">
-				<input type="text" name="email" class="form-control col-6" placeholder="이메일을 입력하세요">
+			<div class="mt-3 d-flex">
+				<input type="text" name="email" class="form-control col-6" placeholder="이메일을 입력하세요">@
+				<select>
+					<option value="">도메인선택</option>
+    				<option value="naver">naver.com</option>
+    				<option value="kakao">kakao.com</option>
+    				<option value="nate">nate.com</option>
+				</select>
 			</div>
 			
 			<br>
