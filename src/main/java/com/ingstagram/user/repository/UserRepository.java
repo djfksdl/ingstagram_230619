@@ -1,8 +1,12 @@
 package com.ingstagram.user.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.ingstagram.user.entity.UserEntity;
+
 @Repository
-public class UserRepository {
-	
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+	public UserEntity findByLoginId(String loginId);
+	public UserEntity findByLoginIdAndPassword(String loginId, String password);
 }

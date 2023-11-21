@@ -30,6 +30,7 @@ public class UserEntity {
 	private int id;
 	private String loginId;
 	private String password;
+	private String name;
 	private String email;
 	@UpdateTimestamp
 	@Column(name = "createdAt", updatable = false)
