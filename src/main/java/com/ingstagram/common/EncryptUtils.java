@@ -1,6 +1,7 @@
 package com.ingstagram.common;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class EncryptUtils {
 	//input : 원본 비밀번호
@@ -12,7 +13,14 @@ public class EncryptUtils {
 			
 			byte[] bytes = message.getBytes();
 			md.update(bytes);
+			byte[] digest = md.digest();
 			
+			for (int i = 0; i < digest.length; i++) {
+				encData += Integer.toHexString(digest[i] & 0xff);
+			}
+			
+		}catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
 		return encData;
 	}

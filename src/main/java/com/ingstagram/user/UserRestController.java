@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ingstagram.common.EncryptUtils;
 import com.ingstagram.user.bo.UserBO;
 import com.ingstagram.user.entity.UserEntity;
 

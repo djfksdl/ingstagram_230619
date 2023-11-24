@@ -8,7 +8,7 @@ import com.ingstagram.post.bo.PostBO;
 
 @RequestMapping("/post")
 @RestController
-//public class PostRestController {
-//	@Autowired
-//	private PostBO postBO;
-//}
+public class PostRestController {
+	@Autowired
+	private PostBO postBO;
+}
