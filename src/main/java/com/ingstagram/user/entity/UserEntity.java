@@ -38,4 +38,8 @@ public class UserEntity {
 	@UpdateTimestamp
 	@Column(name = "updatedAt")
 	private ZonedDateTime updatedAt;
+	public static UserEntityBuilder builder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

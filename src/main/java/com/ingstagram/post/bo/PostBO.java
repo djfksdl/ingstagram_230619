@@ -12,22 +12,22 @@ import com.ingstagram.post.repository.PostRepository;
 
 @Service
 public class PostBO {
-	private Logger logger= LoggerFactory.getLogger(this.getClass());
-	
-	@Autowired
-	private PostRepository postRepository;
-	
-	@Autowired
-	private FileManagerService fileManager;
-	
-	@Autowired
-	private CommentBO commentBO;
-	
-	@Autowired
-	private LikeBO likeBO;
-	
-	// input: X  output: List<PostEntity>
-	public List<PostEntity> getPostList(){
-		return postRepository.findAllByOrderByIdDesc();
-	}
+//	private Logger logger= LoggerFactory.getLogger(this.getClass());
+//	
+//	@Autowired
+//	private PostRepository postRepository;
+//	
+//	@Autowired
+//	private FileManagerService fileManager;
+//	
+//	@Autowired
+//	private CommentBO commentBO;
+//	
+//	@Autowired
+//	private LikeBO likeBO;
+//	
+//	// input: X  output: List<PostEntity>
+//	public List<PostEntity> getPostList(){
+//		return postRepository.findAllByOrderByIdDesc();
+//	}
 }
