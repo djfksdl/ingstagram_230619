@@ -23,7 +23,7 @@
  	</insert>
  	
  	<select id="selectCommentListByPostId"
- 	parameterType="int" resultType="com.ingstagram.domain.Comment">
+ 	parameterType="int" resultType="com.ingstagram.comment.domain.Comment">
  		SELECT
  			`id`
  			,`postId`

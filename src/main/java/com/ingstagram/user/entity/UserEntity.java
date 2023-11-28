@@ -28,6 +28,8 @@ public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name = "loginId")
 	private String loginId;
 	private String password;
 	private String name;
@@ -38,8 +40,5 @@ public class UserEntity {
 	@UpdateTimestamp
 	@Column(name = "updatedAt")
 	private ZonedDateTime updatedAt;
-	public static UserEntityBuilder builder() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

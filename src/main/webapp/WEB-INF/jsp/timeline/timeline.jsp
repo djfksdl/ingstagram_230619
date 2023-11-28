@@ -121,3 +121,209 @@
 		</div>
 	</div>
 </div>
+
+<script>
+$(document).ready(function() {
+	// 파일이미지 클릭 => 숨겨져 있던 type="file"을 동작시킨다.
+	$('#fileUploadBtn').on('click', function(e) {
+		e.preventDefault();  // a 태그의 올라가는 현상 방지
+		$('#file').click();
+	});
+	
+	// 이미지를 선택하는 순간 -> 유효성 확인 및 업로드 된 파일명 노출
+	$('#file').on('change', function(e) {
+		let fileName = e.target.files[0].name; // songbird-8348139_1280.png
+		console.log(fileName);
+		
+		// 확장자 유효성 확인
+		let ext = fileName.split(".").pop().toLowerCase();
+		//alert(ext);
+		if (ext != 'jpg' && ext != 'gif' && ext != 'png' && ext != 'jpeg') {
+			alert("이미지 파일만 업로드 할 수 있습니다.");
+			$('#file').val(""); // 파일 태그에 파일 제거(보이지 않지만 업로드 될 수 있으므로 주의)
+			$("#fileName").text(""); // 파일명 비우기
+			return;
+		}
+		
+		// 유효성 통과한 이미지는 업로드 된 파일명 노출
+		$('#fileName').text(fileName);
+	});
+	
+	// 글쓰기
+	$('#writeBtn').on('click', function() {
+		let content = $('#writeTextArea').val();
+		console.log(content);
+		if (content.length < 1) {
+			alert("글 내용을 입력해주세요");
+			return;
+		}
+		
+		let file = $('#file').val();
+		if (file == '') {
+			alert('파일을 업로드 해주세요');
+			return;
+		}
+		
+		// 파일이 업로드 된 경우 확장자 체크
+		let ext = file.split('.').pop().toLowerCase(); // 파일 경로를 .으로 나누고 확장자가 있는 마지막 문자열을 가져온 후 모두 소문자로 변경
+		if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+			alert("gif, png, jpg, jpeg 파일만 업로드 할 수 있습니다.");
+			$('#file').val(''); // 파일을 비운다.
+			return;
+		}
+		
+		// 폼태그를 자바스크립트에서 만든다.
+		let formData = new FormData();
+		formData.append("content", content);
+		formData.append("file", $('#file')[0].files[0]); // $('#file')[0]은 첫번째 input file 태그를 의미, files[0]는 업로드된 첫번째 파일
+		
+		// AJAX form 데이터 전송
+		$.ajax({
+			type: "post"
+			, url: "/post/create"
+			, data: formData
+			, enctype: "multipart/form-data"    // 파일 업로드를 위한 필수 설정
+			, processData: false    // 파일 업로드를 위한 필수 설정
+			, contentType: false    // 파일 업로드를 위한 필수 설정
+			, success: function(data) {
+				if (data.code == 200) {
+					location.reload();
+				} else if (data.code == 500) { // 비로그인 일 때
+					location.href = "/user/sign-in-view";
+				} else {
+					alert(data.errorMessage);
+				}
+			}
+			, error: function(e) {
+				alert("글 저장에 실패했습니다. 관리자에게 문의해주세요.");
+			}
+		});  // --- ajax 끝
+	});
+	
+	// 댓글 쓰기
+	$('.comment-btn').on('click', function() {
+		//alert("aaaaa");
+		let postId = $(this).data('post-id'); // data-post-id=13
+		//alert(postId);
+		
+		// 댓글 내용 가져오기
+		// 1)
+		//let content = $(this).siblings("input").val().trim();
+		
+		// 2)
+		let content = $(this).prev().val().trim();
+		//alert(content);
+		
+		// ajax
+		$.ajax({
+			type:"post"
+			, url:"/comment/create"
+			, data:{"postId":postId, "content":content}
+		
+			, success:function(data) {
+				if (data.code == 200) {
+					location.reload(true);
+				} else if (data.code == 500) {
+					alert(data.errorMessage);
+					location.href = "/user/sign-in-view";
+				}
+			}
+			, error:function(request, status, error) {
+				alert("댓글 쓰기 실패했습니다.");
+			}
+		});
+	});
+	
+	// 댓글 삭제
+	$('.comment-del-btn').on('click', function(e) {
+		//alert("댓글 삭제 클릭");
+		e.preventDefault(); // a 태그의 위로 올라가는 현상 방지
+		
+		let commentId = $(this).data("comment-id");
+		//alert(commentId);
+		
+		$.ajax({
+			// request
+			type:"DELETE"
+			, url:"/comment/delete"
+			, data:{"commentId":commentId}
+			
+			// response
+			, success:function(data) {
+				if (data.code == 200) {
+					location.reload(true);
+				} else {
+					alert(data.errorMessage);
+				}
+			}
+			, error:function(request, status, error) {
+				alert("댓글 삭제 하는데 실패했습니다.");
+			}
+		});
+	});
+	
+	// 좋아요/해제
+	$('.like-btn').on('click', function(e) {
+		e.preventDefault();
+		//alert("라이크");
+		
+		let postId = $(this).data("post-id");
+		//alert(postId);
+		
+		$.ajax({
+			// request
+			url: "/like/" + postId
+			
+			// response
+			, success:function(data) {
+				if (data.code == 200) {
+					location.reload(true); // 새로고침 => timeline 다시 가져옴 -> 하트 채워지거나 or 비워지거나
+				} else if (data.code == 500) {
+					// 비로그인 상태
+					alert(data.errorMessage);
+					location.href = "/user/sign-in-view"; // 로그인 페이지로 이동
+				}
+			}
+			, error:function(request, status, error) {
+				alert("좋아요 하는데 실패했습니다.");
+			}
+		});
+	});
+	
+	// 글 삭제(... 더보기 버튼 클릭) => 모달 띄우기 => 모달에 글번호 세팅
+	$(".more-btn").on("click", function(e) {
+		e.preventDefault(); // a 태그 올라가는 현상 방지
+		
+		let postId = $(this).data("post-id"); // ... 버튼에 넣어둔 글 번호 getting
+		//alert(postId);
+		
+		// 1개인 모달 태그에 재활용. data-post-id를 심어줌
+		$("#modal").data("post-id", postId); // 모달 태그에 setting
+	});
+	
+	// 모달 안에 있는 삭제하기 클릭 => 진짜 삭제
+	$("#modal #deletePostLink").on("click", function(e) {
+		e.preventDefault();
+		
+		let postId = $("#modal").data("post-id"); // getting
+		//alert(postId);
+		
+		// ajax 글 삭제 요청
+		$.ajax({
+			type:"delete"
+			, url:"/post/delete"
+			, data: {"postId":postId}
+			, success: function(data) {
+				if (data.code == 200) {
+					location.reload(true);
+				} else {
+					alert(data.errorMessage);
+				}
+			}
+			, error: function(e) {
+				alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
+			}
+		});
+	});
+});
+</script>
