@@ -10,14 +10,17 @@ import com.ingstagram.user.repository.UserRepository;
 public class UserBO {
 	@Autowired
 	private UserRepository userRepository;
-	
-	public UserEntity getUsesrEntityById(int userId) {
+
+	public UserEntity getUserEntityById(int userId) {
 		return userRepository.findById(userId).orElse(null);
 	}
+	
 	public UserEntity getUserEntityByLoginId(String loginId) {
 		return userRepository.findByLoginId(loginId);
 	}
-	public Integer addUser(String loginId, String password, String name, String email ) {
+
+	public Integer addUser(String loginId, String password, String name, String email) {
+		// save
 		UserEntity userEntity = userRepository
 				.save(UserEntity.builder()
 						.loginId(loginId)
@@ -28,7 +31,7 @@ public class UserBO {
 		return userEntity == null ? null : userEntity.getId();
 	}
 	
-	public UserEntity getUserEntityByLoginiIdPassword(String loginId, String password) {
-	return userRepository.findByLoginIdAndPassword(loginId, password);
+	public UserEntity getUserEntityByLoginIdPassword(String loginId, String password) {
+		return userRepository.findByLoginIdAndPassword(loginId, password);
 	}
 }
