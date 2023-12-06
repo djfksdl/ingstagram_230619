@@ -44,6 +44,8 @@
 				</select>
 			</div>
 			
+			
+			
 			<br>
 			<div class="d-flex justify-content-end ">
 				<button type="submit" id="signUpBtn" class="btn btn-success">가입하기</button>

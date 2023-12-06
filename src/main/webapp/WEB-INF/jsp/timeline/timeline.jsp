@@ -20,7 +20,7 @@
 					<%-- 업로드 된 임시 파일명 노출 --%>
 					<div id="fileName" class="ml-2"></div>
 				</div>
-				<button id="writeBtn" class="btn btn-info">게시</button>
+				<button id="writeBtn" class="btn btn-success">게시</button>
 			</div>
 		</div> 
 		</c:if>
