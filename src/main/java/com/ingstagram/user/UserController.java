@@ -23,6 +23,13 @@ public class UserController {
 		model.addAttribute("viewName", "user/signIn");
 		return "template/layout";
 	}
+	//개인정보 화면
+		@GetMapping("/user-info-view")
+		public String userInfoView(Model model) {
+			model.addAttribute("viewName", "user/userInfo");
+			return "template/layout";
+		}
+	
 	/**
 	 * 로그아웃
 	 * @param session
