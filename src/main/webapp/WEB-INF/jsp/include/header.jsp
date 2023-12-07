@@ -4,7 +4,7 @@
 <div class="bg-success h-100 header d-flex justify-content-between">
 	<%-- 로고 --%>
 	<div class="logo d-flex align-items-center ">
-		<h1 class="text-white ml-3 mb-3">Ingstagram</h1>
+		<a href="/timeline/timeline-view" class="text-deco"><h1 class="text-white ml-3 mb-3">Ingstagram</h1></a>
 	</div>
 	
 	<%-- 로그인 정보 --%>

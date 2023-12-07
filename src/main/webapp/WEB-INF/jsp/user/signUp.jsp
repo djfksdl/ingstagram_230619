@@ -33,7 +33,7 @@
 				<input type="text" name="name" class="form-control col-8" placeholder="이름을 입력하세요">
 			</div>
 
-			<span class="sign-up-subject">이메일</span>
+			<span class="sign-up-subject">Email</span>
 			<div class="mt-3 d-flex">
 				<input type="text" name="email" class="form-control col-7 mr-2" placeholder="이메일을 입력하세요">@
 				<select >
